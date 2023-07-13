@@ -9,8 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.InputType
+import android.text.TextUtils
+import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -26,7 +30,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toggleButton: MaterialButtonToggleGroup
     private lateinit var phoneEntryField:TextInputEditText
     private lateinit var button:Button
+    private lateinit var listView: ListView
     private lateinit var contactListImage:ImageView
+    private lateinit var mailCheckBox: CheckBox
+    private lateinit var numCheckBox: CheckBox
+
+    private lateinit var numBlock:ConstraintLayout
+    private lateinit var mailBlock:ConstraintLayout
+    private lateinit var mailEntryField:TextInputEditText
+    private lateinit var mailButton:Button
+    private lateinit var mailList:ListView
+    private lateinit var messageButton: Button
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,23 +51,99 @@ class MainActivity : AppCompatActivity() {
         button=findViewById(R.id.button)
         toggleButton=findViewById(R.id.materialButtonToggleGroup)
         phoneEntryField=findViewById(R.id.PhoneEntryField)
-        val listView=findViewById<ListView>(R.id.numList)
-        var phonenolist= mutableListOf<String>()
-        button.setOnClickListener {
-            val recipientslist:String=phoneEntryField.text.toString()
-            val recipient:Array<String> = recipientslist.split(",").toTypedArray()
-            for( i:String in recipient)
-            {
-                phonenolist.add(i)
-            }
+        listView=findViewById(R.id.numList)
+        numBlock=findViewById(R.id.PhoneNumbersBlock)
+        mailBlock=findViewById(R.id.EmailBlock)
 
-            phonenolist.reverse()
-            val ListAdapter=ArrayAdapter(this,android.R.layout.simple_list_item_1,phonenolist)
-            listView.adapter=ListAdapter
-            phoneEntryField.text!!.clear()
+        mailEntryField=findViewById(R.id.EmailEntryField)
+        mailButton=findViewById(R.id.mailButton)
+        mailList=findViewById(R.id.mailList)
+        numCheckBox=findViewById(R.id.numberCheckBox)
+        mailCheckBox=findViewById(R.id.mailCheckBox)
+        messageButton=findViewById(R.id.MessageButton)
+
+        val phonenolist= mutableListOf<String>()
+        button.setOnClickListener {
+            if(phoneEntryField.text.toString().isNotEmpty()) {
+
+                listView.background=resources.getDrawable(R.drawable.listbg)
+                val recipientslist: String = phoneEntryField.text.toString()
+                val recipient: Array<String> = recipientslist.split(",").toTypedArray()
+                for (i: String in recipient) {
+                    phonenolist.add(i.trim())
+                }
+
+                phonenolist.reverse()
+                val ListAdapter =
+                    ArrayAdapter(this, android.R.layout.simple_list_item_1, phonenolist)
+                listView.adapter = ListAdapter
+                phoneEntryField.text!!.clear()
+            }
+            else
+                Toast.makeText(this,"No Numbers Entered",Toast.LENGTH_SHORT).show()
 
 
         }
+
+        numCheckBox.setOnClickListener {
+            if(numCheckBox.isChecked) {
+                numBlock.visibility = View.VISIBLE
+                val dp:Float = 50.0f
+                val px = TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    dp,
+                    resources.displayMetrics
+                )
+                val params=mailBlock.layoutParams as ViewGroup.MarginLayoutParams
+                //ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) linearLayoutRv.getLayoutParams();
+                params.setMargins(0,0,0,0 )
+                mailBlock.layoutParams = params
+            }
+            else
+            {numBlock.visibility=View.GONE
+                val dp:Float = 50.0f
+                val px = TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    dp,
+                    resources.displayMetrics
+                )
+                val params=mailBlock.layoutParams as ViewGroup.MarginLayoutParams
+                //ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) linearLayoutRv.getLayoutParams();
+                params.setMargins(0,px.toInt(),0,0 )
+                mailBlock.layoutParams = params
+            }
+        }
+
+        mailCheckBox.setOnClickListener {
+            if(mailCheckBox.isChecked)
+            {
+                mailBlock.visibility=View.VISIBLE
+            }
+            else
+                mailBlock.visibility=View.GONE
+        }
+
+        var emailList = mutableListOf<String>()
+        mailButton.setOnClickListener {
+            if(mailEntryField.text.toString().isNotEmpty())
+            {
+                mailList.background=resources.getDrawable(R.drawable.listbg)
+                val addressList:String = mailEntryField.text.toString()
+                val address:Array<String> = addressList.split(",").toTypedArray()
+                for(i in address)
+                {
+                    emailList.add(i.trim())
+                }
+                emailList.reverse()
+                val Adapter=ArrayAdapter(this,android.R.layout.simple_list_item_1,emailList)
+                mailList.adapter=Adapter
+                mailEntryField.text!!.clear()
+            }
+            else
+                Toast.makeText(this,"No Emails Entered",Toast.LENGTH_SHORT).show()
+
+        }
+
         contactListImage.setOnClickListener {
             opencontactlist()
         }
@@ -62,17 +154,12 @@ class MainActivity : AppCompatActivity() {
                 when(checkedId)
                 {R.id.AddOnce -> { //
                     // once things
-
-
-
+                    contactListImage.visibility=View.GONE
                     phoneEntryField.inputType= InputType.TYPE_CLASS_NUMBER
                     createAlertDialog("This setting allows you to enter the phone numbers one by one in the input field. After entering every number press the arrow to button to register the number.","ADD NUMBERS")
 
                     }
                  R.id.AddList -> {//list things
-
-
-
 
                      phoneEntryField.inputType=InputType.TYPE_CLASS_TEXT
                      contactListImage.visibility=View.VISIBLE
@@ -82,7 +169,21 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        messageButton.setOnClickListener {
+            val intent = Intent(this,messageActivity::class.java)
 
+            intent.putStringArrayListExtra("numbers",getStringArrayList(phonenolist))
+            intent.putStringArrayListExtra("emails",getStringArrayList(emailList))
+            startActivity(intent)
+        }
+
+    }
+    private fun getStringArrayList(list:MutableList<String>):ArrayList<String>
+    {
+        val retArrayList= arrayListOf<String>()
+        for(i in list)
+            retArrayList.add(i)
+        return retArrayList
     }
 
 

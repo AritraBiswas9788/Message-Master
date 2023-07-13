@@ -8,14 +8,15 @@
     tools:context=".MainActivity">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="-5dp"
-        android:src="@drawable/logocolour"
         android:scaleType="centerInside"
+        android:src="@drawable/logocolour"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,6 +35,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Contacts: "
+            android:textColor="#2F305A"
+            app:layout_constraintBottom_toBottomOf="@+id/numberCheckBox"
+            app:layout_constraintEnd_toStartOf="@+id/numberCheckBox"
+            app:layout_constraintTop_toTopOf="@+id/numberCheckBox" />
+
+        <CheckBox
+            android:id="@+id/numberCheckBox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:buttonTint="#2F305A"
+            android:checked="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/PhoneNumbersBlock"
@@ -159,6 +179,26 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Emails: "
+            android:textColor="#2F305A"
+            app:layout_constraintBottom_toBottomOf="@+id/mailCheckBox"
+            app:layout_constraintEnd_toStartOf="@+id/mailCheckBox"
+            app:layout_constraintTop_toTopOf="@+id/mailCheckBox" />
+
+        <CheckBox
+            android:id="@+id/mailCheckBox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="275dp"
+            android:buttonTint="#2F305A"
+            android:checked="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/EmailBlock"
             android:layout_width="match_parent"
@@ -204,7 +244,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/mailButton"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="60dp"
                 android:layout_height="75dp"
@@ -230,7 +270,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/emailInputLayout" />
 
             <ListView
-                android:id="@+id/numList"
+                android:id="@+id/mailList"
                 android:layout_width="242dp"
                 android:layout_height="90dp"
                 android:layout_marginTop="5dp"
@@ -243,12 +283,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
+            android:id="@+id/MessageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
+            android:layout_marginBottom="50dp"
             android:backgroundTint="#2F305A"
+            android:drawableRight="@drawable/emailicon"
             android:fontFamily="@font/comfortaa_bold"
-            android:text="SEND MESSAGES"
+            android:text="INPUT MESSAGE"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
