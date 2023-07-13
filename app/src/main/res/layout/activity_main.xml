@@ -40,7 +40,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:fontFamily="@font/comfortaa_bold"
             android:text="PHONE NUMBERS:"
             android:textColor="#2F305A"
             android:textSize="20sp"

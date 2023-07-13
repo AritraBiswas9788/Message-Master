@@ -6,21 +6,36 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.InputType
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ListAdapter
+import android.widget.ListView
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity() {
     private lateinit var toggleButton: MaterialButtonToggleGroup
     private lateinit var phoneEntryField:TextInputEditText
-
+    private lateinit var button:Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
-
+        button=findViewById(R.id.button)
         toggleButton=findViewById(R.id.materialButtonToggleGroup)
         phoneEntryField=findViewById(R.id.PhoneEntryField)
+        val listView=findViewById<ListView>(R.id.numList)
+        var phonenolist= mutableListOf<String>()
+        button.setOnClickListener {
+            phonenolist.add(phoneEntryField.text.toString())
+            phonenolist.reverse()
+            val ListAdapter=ArrayAdapter(this,android.R.layout.simple_list_item_1,phonenolist)
+            listView.adapter=ListAdapter
+            phoneEntryField.text!!.clear()
+
+        }
+
+
         toggleButton.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if(isChecked){
                 when(checkedId)
