@@ -70,6 +70,8 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
+            android:id="@+id/contactlist"
+            android:visibility="gone"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/contactsicon"
