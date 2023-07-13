@@ -4,15 +4,139 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/full_image"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="-5dp"
+        android:src="@drawable/logocolour"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/bgshape"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/comfortaa_bold"
+            android:text="PHONE NUMBERS:"
+            android:textColor="#2F305A"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+
+            android:layout_height="70dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="95dp"
+            android:hint="PHONE NUMBER"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/PhoneEntryField"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number"
+                android:lines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="60dp"
+            android:layout_height="75dp"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="#2F305A"
+            android:drawableLeft="@drawable/arrowright"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
+            app:layout_constraintStart_toEndOf="@+id/textInputLayout"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayout" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/materialButtonToggleGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="10dp"
+            app:checkedButton="@+id/AddOnce"
+
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+
+            app:layout_constraintEnd_toEndOf="@+id/button"
+
+            app:singleSelection="true">
+
+            <Button
+                android:id="@+id/AddOnce"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:drawableLeft="@drawable/phn_no"
+                android:text="" />
+
+            <Button
+                android:id="@+id/AddList"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:drawableLeft="@drawable/contact_list"
+                android:text="" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <TextView
+            android:id="@+id/numbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/comfortaa_bold"
+            android:layout_marginTop="10dp"
+            android:text="PHONE NUMBERS RECORDED: "
+            android:textColor="#2F305A"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        <ListView
+            android:id="@+id/numList"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_margin="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/numbers"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
