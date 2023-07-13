@@ -26,12 +26,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toggleButton: MaterialButtonToggleGroup
     private lateinit var phoneEntryField:TextInputEditText
     private lateinit var button:Button
-    private lateinit var ContactListImage:ImageView
+    private lateinit var contactListImage:ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
-        ContactListImage=findViewById(R.id.contactlist)
+        contactListImage=findViewById(R.id.contactlist)
         button=findViewById(R.id.button)
         toggleButton=findViewById(R.id.materialButtonToggleGroup)
         phoneEntryField=findViewById(R.id.PhoneEntryField)
@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
             val recipientslist:String=phoneEntryField.text.toString()
             val recipient:Array<String> = recipientslist.split(",").toTypedArray()
-           var i:Int=recipient.size
             for( i:String in recipient)
             {
                 phonenolist.add(i)
@@ -53,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
 
         }
-        ContactListImage.setOnClickListener {
+        contactListImage.setOnClickListener {
             opencontactlist()
         }
 
@@ -76,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
 
                      phoneEntryField.inputType=InputType.TYPE_CLASS_TEXT
-                     ContactListImage.visibility=View.VISIBLE
+                     contactListImage.visibility=View.VISIBLE
 
                      createAlertDialog("This setting allows the user to either choose a list of contacts from the contacts or Enter a comma separated list of numbers in the field.","ADD NUMBER LIST")
                     }
