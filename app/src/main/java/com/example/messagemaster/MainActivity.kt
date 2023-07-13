@@ -38,7 +38,14 @@ class MainActivity : AppCompatActivity() {
         val listView=findViewById<ListView>(R.id.numList)
         var phonenolist= mutableListOf<String>()
         button.setOnClickListener {
-            phonenolist.add(phoneEntryField.text.toString())
+            val recipientslist:String=phoneEntryField.text.toString()
+            val recipient:Array<String> = recipientslist.split(",").toTypedArray()
+           var i:Int=recipient.size
+            for( i:String in recipient)
+            {
+                phonenolist.add(i)
+            }
+
             phonenolist.reverse()
             val ListAdapter=ArrayAdapter(this,android.R.layout.simple_list_item_1,phonenolist)
             listView.adapter=ListAdapter
