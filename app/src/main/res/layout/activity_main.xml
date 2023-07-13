@@ -177,6 +177,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/numbers"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -192,8 +193,8 @@
             android:id="@+id/mailCheckBox"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="275dp"
+            android:layout_marginRight="10dp"
             android:buttonTint="#2F305A"
             android:checked="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -286,17 +287,43 @@
             android:id="@+id/MessageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="40dp"
             android:backgroundTint="#2F305A"
             android:drawableRight="@drawable/emailicon"
             android:fontFamily="@font/comfortaa_bold"
             android:text="INPUT MESSAGE"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.666"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/Save"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="24dp"
+            android:drawableLeft="@drawable/baseline_save_24"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="@+id/MessageButton"
+            app:layout_constraintEnd_toStartOf="@+id/MessageButton"
+            app:layout_constraintTop_toTopOf="@+id/MessageButton" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/Load"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:drawableLeft="@drawable/baseline_cloud_upload_24"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

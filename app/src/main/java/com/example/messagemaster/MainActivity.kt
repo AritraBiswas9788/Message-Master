@@ -3,6 +3,7 @@ package com.example.messagemaster
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var contactListImage:ImageView
     private lateinit var mailCheckBox: CheckBox
     private lateinit var numCheckBox: CheckBox
+    private lateinit var savednobutton:Button
 
     private lateinit var numBlock:ConstraintLayout
     private lateinit var mailBlock:ConstraintLayout
@@ -41,7 +43,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mailButton:Button
     private lateinit var mailList:ListView
     private lateinit var messageButton: Button
+    private lateinit var load:Button
 
+
+    var phonenolist= mutableListOf<String>()
+    var emailList = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +60,8 @@ class MainActivity : AppCompatActivity() {
         listView=findViewById(R.id.numList)
         numBlock=findViewById(R.id.PhoneNumbersBlock)
         mailBlock=findViewById(R.id.EmailBlock)
+        savednobutton=findViewById(R.id.Save)
+
 
         mailEntryField=findViewById(R.id.EmailEntryField)
         mailButton=findViewById(R.id.mailButton)
@@ -61,9 +69,24 @@ class MainActivity : AppCompatActivity() {
         numCheckBox=findViewById(R.id.numberCheckBox)
         mailCheckBox=findViewById(R.id.mailCheckBox)
         messageButton=findViewById(R.id.MessageButton)
+        load=findViewById(R.id.Load)
+        val pref:SharedPreferences=getSharedPreferences("sharedPrefs", MODE_PRIVATE)
+         var a= mutableListOf<String>().toSet()
 
-        val phonenolist= mutableListOf<String>()
+        load.setOnClickListener {
+            phonenolist =pref.getStringSet("sl",a)!!.toMutableList()
+
+            val ListAdapter =
+                ArrayAdapter(this, android.R.layout.simple_list_item_1, phonenolist)
+            listView.adapter = ListAdapter
+            emailList=pref.getStringSet("sl1",a)!!.toMutableList()
+            val ListAdapter1=ArrayAdapter(this,android.R.layout.simple_list_item_1,emailList)
+            mailList.adapter=ListAdapter1
+        }
+
+
         button.setOnClickListener {
+
             if(phoneEntryField.text.toString().isNotEmpty()) {
 
                 listView.background=resources.getDrawable(R.drawable.listbg)
@@ -73,17 +96,31 @@ class MainActivity : AppCompatActivity() {
                     phonenolist.add(i.trim())
                 }
 
+
                 phonenolist.reverse()
                 val ListAdapter =
                     ArrayAdapter(this, android.R.layout.simple_list_item_1, phonenolist)
                 listView.adapter = ListAdapter
                 phoneEntryField.text!!.clear()
+
             }
-            else
-                Toast.makeText(this,"No Numbers Entered",Toast.LENGTH_SHORT).show()
+            else{
+                val ListAdapter =
+                    ArrayAdapter(this, android.R.layout.simple_list_item_1, phonenolist)
+                listView.adapter = ListAdapter
+            val layout1=layoutInflater.inflate(R.layout.error_toast_layout,findViewById(R.id.view_layout_of_toast1))
+            val toast1: Toast = Toast(this)
+            toast1.view=layout1
+            val txtmsg1: TextView =layout1.findViewById(R.id.textview_toast1)
+            txtmsg1.setText("No Number Entered")
+            toast1.duration.toShort()
+            toast1.show()}
 
 
         }
+
+
+
 
         numCheckBox.setOnClickListener {
             if(numCheckBox.isChecked) {
@@ -123,7 +160,7 @@ class MainActivity : AppCompatActivity() {
                 mailBlock.visibility=View.GONE
         }
 
-        var emailList = mutableListOf<String>()
+
         mailButton.setOnClickListener {
             if(mailEntryField.text.toString().isNotEmpty())
             {
@@ -139,8 +176,14 @@ class MainActivity : AppCompatActivity() {
                 mailList.adapter=Adapter
                 mailEntryField.text!!.clear()
             }
-            else
-                Toast.makeText(this,"No Emails Entered",Toast.LENGTH_SHORT).show()
+            else{
+            val layout1=layoutInflater.inflate(R.layout.error_toast_layout,findViewById(R.id.view_layout_of_toast1))
+            val toast1: Toast = Toast(this)
+            toast1.view=layout1
+            val txtmsg1: TextView =layout1.findViewById(R.id.textview_toast1)
+            txtmsg1.setText("No Mail Entered")
+            toast1.duration.toShort()
+            toast1.show()}
 
         }
 
@@ -176,6 +219,15 @@ class MainActivity : AppCompatActivity() {
             intent.putStringArrayListExtra("emails",getStringArrayList(emailList))
             startActivity(intent)
         }
+        savednobutton.setOnClickListener {
+            var   pref:SharedPreferences=getSharedPreferences("sharedPrefs", MODE_PRIVATE)
+            var editor:SharedPreferences.Editor=pref.edit()
+            editor.apply {
+                putStringSet("sl",phonenolist.toSet())
+                putStringSet("sl1",emailList.toSet())
+            }.apply()
+        }
+
 
     }
     private fun getStringArrayList(list:MutableList<String>):ArrayList<String>
@@ -332,3 +384,5 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
+
