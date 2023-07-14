@@ -235,8 +235,9 @@ class messageActivity : AppCompatActivity() {
     private class myLocalBroadcastReceiver: BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
             val result= intent?.getStringExtra("result")
-            /*if (result.equals("ALL MESSAGES HAVE BEEN DELIVERED"))
-                makeNotification()*/
+            if (result.equals("ALL MESSAGES HAVE BEEN DELIVERED"))
+            {
+            }
             Toast.makeText(context,result!!,Toast.LENGTH_SHORT).show()
         }
 
