@@ -223,7 +223,7 @@ class MainActivity : AppCompatActivity() {
         }
         load.setOnClickListener {
             val builder: androidx.appcompat.app.AlertDialog.Builder= androidx.appcompat.app.AlertDialog.Builder(this)
-            builder.setMessage("Do you want to load the previous Recipient list data?")
+            builder.setMessage("Import Saved Recipient List?")
             builder.setTitle("LOAD DATA")
             builder.apply {
                 setPositiveButton("YES") { dialog, id ->
