@@ -7,6 +7,11 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
+    <queries>
+        <package android:name="com.whatsapp" />
+        <package android:name="com.whatsapp.w4b" />
+    </queries>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,6 +21,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MessageMaster"
         tools:targetApi="31">
+        <service
+            android:name=".MySMSservice"
+            android:exported="false"></service>
+        <service
+            android:name=".WhatsappAccessibilityService"
+            android:exported="true"
+            android:label="My Whatsapp Accessibility"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/whatsappservice" />
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+        </service>
         <activity
             android:name=".messageActivity"
             android:exported="false" />
