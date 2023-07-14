@@ -2,6 +2,7 @@ package com.example.messagemaster
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -9,6 +10,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.provider.Settings
 import android.text.InputType
 import android.text.TextUtils
 import android.util.TypedValue
@@ -73,16 +75,7 @@ class MainActivity : AppCompatActivity() {
         val pref:SharedPreferences=getSharedPreferences("sharedPrefs", MODE_PRIVATE)
          var a= mutableListOf<String>().toSet()
 
-        load.setOnClickListener {
-            phonenolist =pref.getStringSet("sl",a)!!.toMutableList()
 
-            val ListAdapter =
-                ArrayAdapter(this, android.R.layout.simple_list_item_1, phonenolist)
-            listView.adapter = ListAdapter
-            emailList=pref.getStringSet("sl1",a)!!.toMutableList()
-            val ListAdapter1=ArrayAdapter(this,android.R.layout.simple_list_item_1,emailList)
-            mailList.adapter=ListAdapter1
-        }
 
 
         button.setOnClickListener {
@@ -105,9 +98,9 @@ class MainActivity : AppCompatActivity() {
 
             }
             else{
-                val ListAdapter =
-                    ArrayAdapter(this, android.R.layout.simple_list_item_1, phonenolist)
-                listView.adapter = ListAdapter
+//                val ListAdapter =
+//                    ArrayAdapter(this, android.R.layout.simple_list_item_1, phonenolist)
+//                listView.adapter = ListAdapter
             val layout1=layoutInflater.inflate(R.layout.error_toast_layout,findViewById(R.id.view_layout_of_toast1))
             val toast1: Toast = Toast(this)
             toast1.view=layout1
@@ -226,9 +219,39 @@ class MainActivity : AppCompatActivity() {
                 putStringSet("sl",phonenolist.toSet())
                 putStringSet("sl1",emailList.toSet())
             }.apply()
+            showToast("Recipient Data Saved Successfully")
+        }
+        load.setOnClickListener {
+            val builder: androidx.appcompat.app.AlertDialog.Builder= androidx.appcompat.app.AlertDialog.Builder(this)
+            builder.setMessage("Do you want to load the previous Recipient list data?")
+            builder.setTitle("LOAD DATA")
+            builder.apply {
+                setPositiveButton("YES") { dialog, id ->
+
+                    phonenolist =pref.getStringSet("sl",a)!!.toMutableList()
+                    val ListAdapter =
+                        ArrayAdapter(this@MainActivity, android.R.layout.simple_list_item_1, phonenolist)
+                    listView.adapter = ListAdapter
+                    emailList=pref.getStringSet("sl1",a)!!.toMutableList()
+                    val ListAdapter1=ArrayAdapter(this@MainActivity,android.R.layout.simple_list_item_1,emailList)
+                    mailList.adapter=ListAdapter1
+                    showToast("Recipient Data load Successfully")
+
+
+                }
+                setNegativeButton("NO"){ dialogInterface: DialogInterface, i: Int ->
+
+                }
+            }
+            val dialog: androidx.appcompat.app.AlertDialog =builder.create()
+            dialog.show()
+
         }
 
-
+    }
+    private fun showToast(message:String)
+    {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
     }
     private fun getStringArrayList(list:MutableList<String>):ArrayList<String>
     {
