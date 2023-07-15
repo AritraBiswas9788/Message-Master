@@ -103,7 +103,7 @@
                 android:layout_height="50dp"
                 android:layout_marginRight="5dp"
                 android:src="@drawable/contactsicon"
-                android:visibility="gone"
+                   android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
                 app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
                 app:layout_constraintTop_toTopOf="@+id/textInputLayout" />

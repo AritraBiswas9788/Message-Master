@@ -206,11 +206,24 @@ class MainActivity : AppCompatActivity() {
             }
         }
         messageButton.setOnClickListener {
-            val intent = Intent(this,messageActivity::class.java)
+            if(phonenolist.isEmpty() && emailList.isEmpty())
+            {
+                val layout1=layoutInflater.inflate(R.layout.error_toast_layout,findViewById(R.id.view_layout_of_toast1))
+                val toast1: Toast = Toast(this)
+                toast1.view=layout1
+                val txtmsg1: TextView =layout1.findViewById(R.id.textview_toast1)
+                txtmsg1.setText("Please Enter atleast one Number or one Email")
+                toast1.duration.toShort()
+                toast1.show()
+           }
+            else{
 
-            intent.putStringArrayListExtra("numbers",getStringArrayList(phonenolist))
-            intent.putStringArrayListExtra("emails",getStringArrayList(emailList))
-            startActivity(intent)
+                val intent = Intent(this,messageActivity::class.java)
+
+                intent.putStringArrayListExtra("numbers",getStringArrayList(phonenolist))
+                intent.putStringArrayListExtra("emails",getStringArrayList(emailList))
+                startActivity(intent)
+            }
         }
         savednobutton.setOnClickListener {
             var   pref:SharedPreferences=getSharedPreferences("sharedPrefs", MODE_PRIVATE)
